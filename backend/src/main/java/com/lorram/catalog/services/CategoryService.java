@@ -13,6 +13,8 @@ import com.lorram.catalog.entities.Category;
 import com.lorram.catalog.repositories.CategoryRepository;
 import com.lorram.catalog.services.exceptions.ObjectNotFoundException;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class CategoryService {
 
@@ -32,12 +34,30 @@ public class CategoryService {
 		return new CategoryDTO(entity);
 	}
 	
-	@Transactional(readOnly = true)
+	@Transactional
 	public CategoryDTO insert(CategoryDTO dto) {
 		Category entity = new Category();
 		entity.setName(dto.getName());
 		entity = repository.save(entity);
 		return new CategoryDTO(entity);
+	}
+
+	@Transactional
+	public CategoryDTO update(Long id, CategoryDTO dto) {
+		try {
+		Category entity = repository.getReferenceById(id);
+		entity.setName(dto.getName());
+		entity = repository.save(entity);
+		return new CategoryDTO(entity); 
+		}
+		catch(EntityNotFoundException e) {
+			throw new ObjectNotFoundException(id);
+		}
+	}
+	
+	public void delete (Long id) {
+		findById(id);
+		repository.deleteById(id);
 	}
 	
 }
