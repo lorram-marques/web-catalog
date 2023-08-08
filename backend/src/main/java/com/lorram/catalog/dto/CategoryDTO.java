@@ -10,7 +10,7 @@ public class CategoryDTO implements Serializable {
 	private Long id;
 	private String name;
 	
-	CategoryDTO() {
+	public CategoryDTO() {
 	}
 
 	public CategoryDTO(Long id, String name) {
