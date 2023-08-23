@@ -58,7 +58,6 @@ public class CategoryService {
 	}
 	
 	public void delete (Long id) {
-		findById(id);
 		try {
 		repository.deleteById(id);
 		} 
