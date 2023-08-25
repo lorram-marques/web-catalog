@@ -1,5 +1,8 @@
 package com.lorram.catalog.dto;
 
+import com.lorram.catalog.services.validation.UserInsertValid;
+
+@UserInsertValid
 public class UserInsertDTO extends UserDTO {
 	private static final long serialVersionUID = 1L;
 
