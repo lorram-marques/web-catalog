@@ -19,7 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.lorram.catalog.dto.ProductDTO;
 import com.lorram.catalog.services.ProductService;
 
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/products")

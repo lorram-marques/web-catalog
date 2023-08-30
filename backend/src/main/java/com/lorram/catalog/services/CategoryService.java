@@ -2,8 +2,11 @@ package com.lorram.catalog.services;
 
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -14,8 +17,6 @@ import com.lorram.catalog.entities.Category;
 import com.lorram.catalog.repositories.CategoryRepository;
 import com.lorram.catalog.services.exceptions.DatabaseException;
 import com.lorram.catalog.services.exceptions.ObjectNotFoundException;
-
-import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class CategoryService {
@@ -47,7 +48,7 @@ public class CategoryService {
 	@Transactional
 	public CategoryDTO update(Long id, CategoryDTO dto) {
 		try {
-		Category entity = repository.getReferenceById(id);
+		Category entity = repository.getOne(id);
 		entity.setName(dto.getName());
 		entity = repository.save(entity);
 		return new CategoryDTO(entity); 
@@ -60,7 +61,9 @@ public class CategoryService {
 	public void delete (Long id) {
 		try {
 		repository.deleteById(id);
-		} 
+		} catch (EmptyResultDataAccessException e) {
+			throw new ObjectNotFoundException(id);
+		}
 		catch (DataIntegrityViolationException e) {
 			throw new DatabaseException("Integrity violation");
 		}

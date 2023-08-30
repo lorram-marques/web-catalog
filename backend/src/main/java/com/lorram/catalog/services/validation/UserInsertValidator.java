@@ -3,15 +3,15 @@ package com.lorram.catalog.services.validation;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.lorram.catalog.dto.UserInsertDTO;
 import com.lorram.catalog.entities.User;
 import com.lorram.catalog.repositories.UserRepository;
 import com.lorram.catalog.resources.exceptions.FieldMessage;
-
-import jakarta.validation.ConstraintValidator;
-import jakarta.validation.ConstraintValidatorContext;
 
 public class UserInsertValidator implements ConstraintValidator<UserInsertValid, UserInsertDTO> {
 	

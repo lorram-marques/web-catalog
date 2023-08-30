@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.lorram.catalog.services.exceptions.DatabaseException;
 import com.lorram.catalog.services.exceptions.ObjectNotFoundException;
 
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
 public class ResourceExceptionHandler {

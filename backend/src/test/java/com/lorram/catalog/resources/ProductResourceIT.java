@@ -92,4 +92,5 @@ public class ProductResourceIT {
 		
 		result.andExpect(status().isNotFound());
 	}
+	
 }

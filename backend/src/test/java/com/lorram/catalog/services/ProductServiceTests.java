@@ -25,6 +25,7 @@ import com.lorram.catalog.dto.ProductDTO;
 import com.lorram.catalog.entities.Product;
 import com.lorram.catalog.repositories.ProductRepository;
 import com.lorram.catalog.services.exceptions.DatabaseException;
+import com.lorram.catalog.services.exceptions.ObjectNotFoundException;
 import com.lorram.catalog.tests.Factory;
 
 
@@ -86,6 +87,16 @@ public class ProductServiceTests {
 	}
 	
 	@Test
+	public void deleteShouldThrowObjectNotFoundExceptionWhenIdDoesNotExist() {
+		
+		Assertions.assertThrows(ObjectNotFoundException.class, () -> {
+			service.delete(nonExistingId);
+		});
+
+		Mockito.verify(repository, times(1)).deleteById(nonExistingId);
+	}
+	
+	@Test
 	public void deleteShouldDoNothingWhenIdExists() {
 		
 		Assertions.assertDoesNotThrow(() -> {
@@ -94,4 +105,5 @@ public class ProductServiceTests {
 		
 		Mockito.verify(repository, times(1)).deleteById(existingId);
 	}
+	
 }

@@ -21,7 +21,7 @@ import com.lorram.catalog.dto.UserInsertDTO;
 import com.lorram.catalog.dto.UserUpdateDTO;
 import com.lorram.catalog.services.UserService;
 
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/users")

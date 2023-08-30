@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lorram.catalog.dto.ProductDTO;
 import com.lorram.catalog.repositories.ProductRepository;
+import com.lorram.catalog.services.exceptions.ObjectNotFoundException;
 
 
 
@@ -25,21 +26,31 @@ public class ProductServiceIT {
 	@Autowired
 	private ProductRepository repository;
 	
-	private Long id;
+	private Long existingId;
+	private Long nonExistingId;
 	private Long countTotalProducts;
 	
 	@BeforeEach
 	void setUp() throws Exception {
-		id = 1L;
+		existingId = 1L;
+		nonExistingId = 1000L;
 		countTotalProducts = 25L;
 	}
 	
 	@Test
 	public void deleteShouldDeleteObjectWhenIdExists() {
 		
-		service.delete(id);
+		service.delete(existingId);
 
 		Assertions.assertEquals(countTotalProducts - 1, repository.count());
+	}
+	
+	@Test
+	public void deleteShouldThrowObjectNotFoundExceptionWhenIdDoesNotExist() {
+		
+		Assertions.assertThrows(ObjectNotFoundException.class, () -> {
+			service.delete(nonExistingId);
+		});
 	}
 	
 	@Test
@@ -77,4 +88,5 @@ public class ProductServiceIT {
 		Assertions.assertEquals("PC Gamer", result.getContent().get(1).getName());
 		Assertions.assertEquals("PC Gamer Alfa", result.getContent().get(2).getName());		
 	}
+	
 }
